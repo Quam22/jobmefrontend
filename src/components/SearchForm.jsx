@@ -5,6 +5,8 @@ import { useGlobalContext } from "../hooks/useGlobalContext";
 
 const SearchForm = () => {
   const { updateJobType, updateIndustry, updateMode } = useGlobalContext();
+  const [locations, setLocations] = useState([]);
+  const [industries, setIndustries] = useState([]);
 
   const [jType, setJType] = useState("");
   const [mType, setMType] = useState("");
@@ -21,6 +23,16 @@ const SearchForm = () => {
     setMType("");
     setIType("");
   };
+  useEffect(() => {
+    const getLocations = async () => {
+      const { data } = await axios(
+        "https://jobme-quam.onrender.com/api/v1/jobs/locations"
+      );
+      setLocations(data.location);
+      setIndustries(data.industries);
+    };
+    getLocations();
+  }, []);
   return (
     <div className="searchform p-3">
       <form onSubmit={handleSelection} className="container ">
@@ -50,14 +62,15 @@ const SearchForm = () => {
             onChange={(e) => setIType(e.target.value)}
           >
             <option value="">Select Industry</option>
-            {industry.map((type, i) => {
-              return (
-                <option key={i} value={type}>
-                  {" "}
-                  {type}{" "}
-                </option>
-              );
-            })}
+            {industries &&
+              industries.map((type, i) => {
+                return (
+                  <option key={i} value={type}>
+                    {" "}
+                    {type}{" "}
+                  </option>
+                );
+              })}
           </select>
           <select
             name=""
@@ -81,6 +94,14 @@ const SearchForm = () => {
             className="form-select py-2 px-xl-4 rounded-2 fs-5"
           >
             <option value="">Select Location</option>
+            {locations &&
+              locations.map((loc, index) => {
+                return (
+                  <option key={index} value={loc}>
+                    {loc}
+                  </option>
+                );
+              })}
           </select>
           <div className="d-xl-flex align-items-center justify-content-center">
             {path === "/" ? (
