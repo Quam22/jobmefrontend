@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { jobType, mode, industry } from "../data/jobs";
 import { useGlobalContext } from "../hooks/useGlobalContext";
+import axios from "axios";
 
 const SearchForm = () => {
   const { updateJobType, updateIndustry, updateMode } = useGlobalContext();
