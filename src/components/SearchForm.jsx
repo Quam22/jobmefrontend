@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { jobType, mode, industry } from "../data/jobs";
 import { useGlobalContext } from "../hooks/useGlobalContext";
